@@ -1,16 +1,33 @@
 <html>
 	<head>
+		<style>
+		.button {
+			background-color: #4CAF50; /* Green */
+			border: none;
+			color: white;
+			padding: 15px 32px;
+  			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+  			margin: 4px 2px;
+ 			cursor: pointer;
+ 			background-color: #008CBA
+			}
+		</style>
 	</head>
-	<body>
+	<body bgcolor="#999999">
 	<div id="words">
 	</div>
 	<p id="first" style="display:inline"></p>
 	<input type="text" id="guess" name="guess" required
 			       minlength="2" maxlength="20" size="20">
 	<p id="second" style="display:inline"></p>
-	<button id="gb" onclick="javascript:handleWord()">Guess!</button>
-	<button id="next" onclick="javascript:genWord()">Next Word!</button>
-	<button id="show" onClick="javascript:showAnswers()">Show Answers!</button>
+	<div display="block">
+	<button id="gb" class="button" onclick="javascript:handleWord()">Guess!</button>
+	<button id="next" class="button" onclick="javascript:genWord()">Next Word!</button>
+	<button id="show" class="button" onClick="javascript:showAnswers()">Show Answers!</button>
+	</div>
 	<p id="puzzle"> </p>
 	<p id="possible"></p>
 	<p id="score">Score: 0 </p>
