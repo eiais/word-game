@@ -34,13 +34,11 @@
 	<p id="puzzle"> </p>
 	<p id="possible"></p>
 	<p id="score">Score: 0 </p>
-	<p id="perfect"> </p>
 	<input type="checkbox" id="full"> Enter full word (Takes effect next word)
 	</body>
 	<script type="text/javascript" src="words.js"></script>
 	<script>
                 let score = 0;
-		let perfect = 0;
 		let possible = 0;
 		let puzzles = {}
 		let nextPuzzle = ""
@@ -64,7 +62,7 @@
 			if ( puzzles[nextPuzzle].includes(word)) {
 				document.getElementById("words").innerHTML += '<a href="https://en.wiktionary.org/wiki/'+word+'" target="_blank">'+word+'</a>'
 				document.getElementById("guess").value = ""
-				score += 1
+				score += 10
 				document.getElementById("score").innerHTML = "Score: " + String(score)
 				delete puzzles[nextPuzzle][puzzles[nextPuzzle].indexOf(word)]
 				possible -= 1
@@ -87,6 +85,10 @@
 		}
 		function genWord() {
 			document.getElementById("guess").value = ""
+			if (nextPuzzle != "") {
+				score -= puzzles[nextPuzzle].length
+				document.getElementById("score").innerHTML = "Score: " + String(score)
+			}
 			let keys = Object.keys(puzzles)
 			nextPuzzle = keys[ keys.length * Math.random() << 0];
 			if (document.getElementById("full").checked) {
@@ -110,10 +112,8 @@
 				input.size = wordSize
 				input.placeholder = String(wordSize)
 			}
-			perfect += puzzles[nextPuzzle].length
 			possible = puzzles[nextPuzzle].length
 			document.getElementById("puzzle").innerHTML = "Current: " + nextPuzzle
-			document.getElementById("perfect").innerHTML = "Perfect: " + String(perfect)
 			document.getElementById("words").innerHTML = ""
 			document.getElementById("possible").innerHTML = "Possible for round: " +possible
 		}
