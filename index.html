@@ -50,7 +50,7 @@
                 });
                 function handleWord() {
 			let word = (document.getElementById("first").innerHTML + 
-				    document.getElementById("guess").value +
+				    document.getElementById("guess").value.toLowerCase() +
 				    document.getElementById("second").innerHTML)
 			if ( puzzles[nextPuzzle].includes(word)) {
                         	document.getElementById("words").innerHTML += '<p>' + word + '</p>'
