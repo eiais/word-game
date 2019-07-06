@@ -1,0 +1,92 @@
+<html>
+	<head>
+	</head>
+	<body>
+	<div id="words">
+	</div>
+	<p id="first" style="display:inline"></p>
+	<input type="text" id="guess" name="guess" required
+			       minlength="2" maxlength="20" size="20">
+	<p id="second" style="display:inline"></p>
+	<button id="gb" onclick="javascript:handleWord()">Guess!</button>
+	<button id="next" onclick="javascript:genWord()">Next Word!</button>
+	<button id="show" onClick="javascript:showAnswers()">Show Answers!</button>
+	<p id="puzzle"> </p>
+	<p id="possible"></p>
+	<p id="score">Score: 0 </p>
+	<p id="perfect"> </p>
+	</body>
+	<script type="text/javascript" src="words.js"></script>
+	<script>
+                let score = 0;
+		let perfect = 0;
+		let possible = 0;
+		let puzzles = {}
+		let nextPuzzle = ""
+		let input = document.getElementById("guess")
+                input.addEventListener("keyup", function(event) {
+                        // Number 13 is the "Enter" key on the keyboard
+                        if (event.keyCode === 13) {
+                                // Trigger the guessButton with a click
+                                document.getElementById("gb").click();
+                        }
+                });
+                function handleWord() {
+			let word = (document.getElementById("first").innerHTML + 
+				    document.getElementById("guess").value +
+				    document.getElementById("second").innerHTML)
+			if ( puzzles[nextPuzzle].includes(word)) {
+                        	document.getElementById("words").innerHTML += '<p>' + word + '</p>'
+				document.getElementById("guess").value = ""
+				score += 1
+				document.getElementById("score").innerHTML = "Score: " + String(score)
+				delete puzzles[nextPuzzle][puzzles[nextPuzzle].indexOf(word)]
+				possible -= 1
+				document.getElementById("possible").innerHTML = "Possible for round: " +possible
+
+			}
+                }
+		function createDict() {
+			for (let i = 0; i < words.length; i++){
+				word = words[i]
+				abr = word[0] + String(word.length - 2) + word[word.length -1]
+				if (puzzles[abr] == undefined) {
+					puzzles[abr] = [word]
+				} else {
+					puzzles[abr].push(word)
+				}
+			}
+		}
+		function genWord() {
+			let keys = Object.keys(puzzles)
+			nextPuzzle = keys[ keys.length * Math.random() << 0];
+			document.getElementById("first").innerHTML = nextPuzzle[0]
+	                document.getElementById("second").innerHTML = nextPuzzle[nextPuzzle.length -1]
+			let wordSize = parseInt(nextPuzzle.substring(1, nextPuzzle.length-1))
+			input.minLength = 0
+			input.maxLength = wordSize
+			input.minLength = wordSize
+			input.size = wordSize
+			input.placeholder = String(wordSize)
+			perfect += puzzles[nextPuzzle].length
+			possible = puzzles[nextPuzzle].length
+			document.getElementById("puzzle").innerHTML = "Current: " + nextPuzzle
+			document.getElementById("perfect").innerHTML = "Perfect: " + String(perfect)
+			document.getElementById("words").innerHTML = ""
+			document.getElementById("possible").innerHTML = "Possible for round: " +possible
+		}
+
+		function showAnswers() {
+			for (let i=0; i<puzzles[nextPuzzle].length; i++) {
+				let word = puzzles[nextPuzzle][i]
+				document.getElementById("words").innerHTML += '<p>' + word + '</p>'
+                                delete puzzles[nextPuzzle][puzzles[nextPuzzle].indexOf(word)]
+                                possible -= 1
+                                document.getElementById("possible").innerHTML = "Possible for round: " +possible
+			}
+		}
+		createDict()
+		genWord()
+        </script>
+
+</html>
