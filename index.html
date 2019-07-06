@@ -79,6 +79,9 @@
 		function showAnswers() {
 			for (let i=0; i<puzzles[nextPuzzle].length; i++) {
 				let word = puzzles[nextPuzzle][i]
+				if (word == undefined) {
+					continue
+				}
 				document.getElementById("words").innerHTML += '<p>' + word + '</p>'
                                 delete puzzles[nextPuzzle][puzzles[nextPuzzle].indexOf(word)]
                                 possible -= 1
