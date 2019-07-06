@@ -86,6 +86,7 @@
 			}
 		}
 		function genWord() {
+			document.getElementById("guess").value = ""
 			let keys = Object.keys(puzzles)
 			nextPuzzle = keys[ keys.length * Math.random() << 0];
 			if (document.getElementById("full").checked) {
