@@ -70,7 +70,9 @@
 				if (puzzles[abr] == undefined) {
 					puzzles[abr] = [word]
 				} else {
-					puzzles[abr].push(word)
+					if (!puzzles[abr].includes(word)) {
+						puzzles[abr].push(word)
+					}
 				}
 			}
 		}
