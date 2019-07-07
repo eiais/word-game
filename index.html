@@ -72,14 +72,9 @@
                         }
                 });
                 function handleWord() {
-			let word = ""
-			if (document.getElementById("full").checked) {
-				word = document.getElementById("guess").value.toLowerCase() 
-			} else {
-				word = (document.getElementById("first").innerHTML + 
+			let word = (document.getElementById("first").innerHTML + 
 				    document.getElementById("guess").value.toLowerCase() +
 				    document.getElementById("second").innerHTML)
-			}
 			if ( puzzles[nextPuzzle].includes(word)) {
 				document.getElementById("words").innerHTML += '<a href="https://en.wiktionary.org/wiki/'+word+'" target="_blank">'+word+'</a>'
 				document.getElementById("guess").value = ""
