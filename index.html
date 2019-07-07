@@ -1,5 +1,6 @@
 <html>
 	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<style>
 		.button {
 			background-color: #4CAF50; /* Green */
@@ -17,29 +18,43 @@
 		a {
 			display:block
 			}
+		p {
+			margin:0
+		}
+		.game {
+			display:flex
+		}
+		.column {
+			flex:30%;
+			padding:5%;
+		}
 		</style>
 	</head>
-	<body bgcolor="#999999">
-	<div id="words">
+	<body bgcolor="#999999" display=flex>
+	<div class="game">
+	<div class="column">
+		<div id="words"></div>
+		<p id="first" style="display:inline"></p>
+		<input type="text" id="guess" name="guess" required
+				minlength="2" maxlength="20" size="20">
+		<p id="second" style="display:inline"></p>
+		<p id="puzzle"></p>
+		<div display="block">
+			<button id="gb" class="button" onclick="javascript:handleWord()">Guess!</button>
+			<button id="next" class="button" onclick="javascript:genWord()">Next Word!</button>
+			<button id="show" class="button" onClick="javascript:showAnswers()">Show Answers!</button>
+		</div>
 	</div>
-	<p id="first" style="display:inline"></p>
-	<input type="text" id="guess" name="guess" required
-			       minlength="2" maxlength="20" size="20">
-	<p id="second" style="display:inline"></p>
-	<div display="block">
-	<button id="gb" class="button" onclick="javascript:handleWord()">Guess!</button>
-	<button id="next" class="button" onclick="javascript:genWord()">Next Word!</button>
-	<button id="show" class="button" onClick="javascript:showAnswers()">Show Answers!</button>
+	<div class="column">
+		<p id="possible"></p>
+		<p id="score">Score: 0 </p>
+		<div><input type="checkbox" id="full"> Enter full word (Takes effect next word)</label></div>
+		<div><input type="number" id="minNum" name="minNum" required
+			min=4 max=22 value=4><label> Min word length</label></div>
+		<div><input type="number" id="maxNum" name="maxNum" required
+			min=4 max=22 value=22><label> Max word length</label></div>
 	</div>
-	<p id="puzzle"> </p>
-	<p id="possible"></p>
-	<p id="score">Score: 0 </p>
-	<input type="checkbox" id="full"> Enter full word (Takes effect next word)
-	<br>
-	<input type="number" id="minNum" name="minNum" required
-                               min=4 max=22 value=4> Min word length
-	<input type="number" id="maxNum" name="maxNum" required
-                               min=4 max=22 value=22> Max word length
+	</div>
 	</body>
 	<script type="text/javascript" src="words.js"></script>
 	<script>
