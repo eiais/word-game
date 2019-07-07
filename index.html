@@ -35,11 +35,17 @@
 	<p id="possible"></p>
 	<p id="score">Score: 0 </p>
 	<input type="checkbox" id="full"> Enter full word (Takes effect next word)
+	<br>
+	<input type="number" id="minNum" name="minNum" required
+                               min=4 max=22 value=4> Min word length
+	<input type="number" id="maxNum" name="maxNum" required
+                               min=4 max=22 value=22> Max word length
 	</body>
 	<script type="text/javascript" src="words.js"></script>
 	<script>
                 let score = 0;
 		let possible = 0;
+		let allPuzzles = [{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}]
 		let puzzles = {}
 		let nextPuzzle = ""
 		let input = document.getElementById("guess")
@@ -72,7 +78,8 @@
                 }
 		function createDict() {
 			for (let i = 0; i < words.length; i++){
-				word = words[i]
+				let word = words[i]
+				puzzles = allPuzzles[word.length - 4]
 				abr = word[0] + String(word.length - 2) + word[word.length -1]
 				if (puzzles[abr] == undefined) {
 					puzzles[abr] = [word]
@@ -89,6 +96,9 @@
 				score -= puzzles[nextPuzzle].length
 				document.getElementById("score").innerHTML = "Score: " + String(score)
 			}
+			min = parseInt(document.getElementById("minNum").value)
+			max = parseInt(document.getElementById("maxNum").value)
+			puzzles = allPuzzles[((Math.random() * (max-min+1) + min) << 0)-4];
 			let keys = Object.keys(puzzles)
 			nextPuzzle = keys[ keys.length * Math.random() << 0];
 			if (document.getElementById("full").checked) {
@@ -115,9 +125,8 @@
 			possible = puzzles[nextPuzzle].length
 			document.getElementById("puzzle").innerHTML = "Current: " + nextPuzzle
 			document.getElementById("words").innerHTML = ""
-			document.getElementById("possible").innerHTML = "Possible for round: " +possible
+			document.getElementById("possible").innerHTML = "Possible for round: " +possible	
 		}
-
 		function showAnswers() {
 			for (let i=0; i<puzzles[nextPuzzle].length; i++) {
 				let word = puzzles[nextPuzzle][i]
